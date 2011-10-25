@@ -1,3 +1,5 @@
-# Kohana PHP Framework, version 3.1 (release)
+# Komanage is a CMS built on Kohana Framework
 
-This is the current release version of [Kohana](http://kohanaframework.org/).
+This project is currently in development.
+All questions can be directed to Ethan Schaefer <ethanmschaefer@gmail.com>
+
