@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access');
 
-class Controller_Page extends Controller {
+class Controller_Page extends Abstract_Front_Process {
 
 	/**
 	 * This method routes all applications and content through a page uri

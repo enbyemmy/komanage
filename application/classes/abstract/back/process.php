@@ -9,6 +9,9 @@ abstract class Abstract_Back_Process extends Abstract_Controller {
 	{
 		parent::before();
 
+		// check if there is an admin level user logged in other wise redirect them to the login form
+		
+
 		// @todo write this page process for the backend
 		
 	}

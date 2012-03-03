@@ -5,33 +5,41 @@
  */
 abstract class Abstract_Controller extends Controller {
 	
-	protected $title = 'Komanage | ';
-	protected $front = 'templates/layout';
-	protected $back = 'templates/admin';
+	protected $title;
+	protected $meta_description;
+	protected $template;
 	
 	public function before()
 	{
 		parent::before();
 
-		// Load in the template view
-		$this->template = View::factory($this->view);
-		
+		// set the dir for logic
+		$dir = $this->request->directory();
+		$template = ($dir == 'admin') ? 'back' : 'front';
+
+		$is_ajax = ($this->request->is_ajax()) ? true : false;
+
+		$this->template = View::factory($template);
+		$this->template->is_ajax = $is_ajax;
+		$this->template->navigation = View::factory($template . '/shared/navigation');
+
 		// Set defaults for title and content
 		$this->template->content = '';
-		$this->template->title = $this->title;
+		$this->template->title = ORM::factory('configuration', 'title')->value . ' | ' . $this->title . ' ';
+		$this->template->meta_description = $this->meta_description;
 
 		// init the included javascript
 		$this->template->scripts = array();
-		
+
 		// init the stylesheets
 		$this->template->stylesheets = array();
-		
+
 		// Set the currently executing controller
 		$this->template->controller = $this->request->controller();
 
-		// laziness.........
-		// Set a refrence to the content for ease of access
-		//$this->content =& $this->template->content;
+		$this->template->config = Model_Configuration::get_as_array();
+
+
 	}
 	
 	public function after()
