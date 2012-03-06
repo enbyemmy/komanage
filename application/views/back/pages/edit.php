@@ -84,19 +84,19 @@ label#application, #instance, #new-instance {
 
 
 	<!-- content blocks -->
-	<label id="content-blocks">
-		<input type="button" id="new-content-block" value="Add New Content Block" />
-	</label>
-
 
 
 	<label>
 		<span class="bit">
-			Save it!
+			Don't forget
 		</span>
-		<input type="submit" value="Save" />
+		<input type="submit" value="Save!" />
 	</label>
 </form>
+
+<div id="content-blocks">
+	<a id="new-content-block" href="/admin/content/edit">Add new content block</a>
+</div>
 <script>
 	$(function() {
 		$("#application-bool").click(function() {
@@ -118,6 +118,13 @@ label#application, #instance, #new-instance {
 			if (target == '') {
 				$("#application-options").hide();
 				return false;
+<label>
+	Name
+	<span class="bit">
+	This is content block name, it will be used as a header for your content block and also for labeling purposes in the admin section.
+	</span>
+	<input type="text" name="name" placeholder="Name this content block..." />
+</label>
 			}
 
 			$("#application-options").show();
@@ -134,6 +141,14 @@ label#application, #instance, #new-instance {
 
 			$.colorbox({href:url});
 
+		});
+
+
+		// add new content block
+		$("#new-content-block").click(function() {
+			var href = $(this).attr('href');
+			$.colorbox({href:href});
+			return false;
 		});
 
 	});

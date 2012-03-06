@@ -9,7 +9,7 @@
 	<li style="display: none;">
 		<a href="/admin/blog">Blog</a>
 	</li>
-	<li>
+	<li style="display: none;">
 		<a href="/admin/portfolio">Portfolio</a>
 	</li>
 	<li>
