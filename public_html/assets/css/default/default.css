@@ -74,3 +74,26 @@ nav ul#navigation li {
 	margin: 10px;
 
 }
+
+/* misc */
+
+strong { font-weight: bold; }
+
+/* pages index */
+
+ul.list { width: 100%; list-style-type: none; margin:0;padding:0; }
+
+.list li { width: 300px; height: 100px; display: inline-block; float: left; margin: 0 10px 10px 0; border: 1px solid #ddd; }
+.list li h3 { margin: 0; padding: 0; }
+.list li a { display: block; padding: 10px; }
+.list li .aside { float: right; color: #ddd; font-style: italic; margin-right: 10px; font-size: .8em; line-height: 1.5em; } 
+.list li .controls { display: inline-block; float: right; }
+.list li .controls a { color: #ccc; text-decoration: none; font-weight: bold; font-style: normal; }
+.list li .controls a:hover { color: #ddd; }
+.list li p { padding: 10px; }
+
+
+/* interfaces */
+
+.interface { display: none; }
+form.async { display: block; width: 600px; height: 400px; position: relative; float: left; }

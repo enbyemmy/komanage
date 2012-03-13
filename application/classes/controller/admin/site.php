@@ -44,7 +44,10 @@ class Controller_Admin_Site extends Abstract_Back_Process {
 			$save = Model_Configuration::edit($this->request->post());
 
 			// route messages to the template alert
-			echo ($save) ? 'Saved successfully' : 'There were errors, sorry chap';
+			$message =  ($save) ? 'Saved successfully' : 'There were errors, sorry chap';
+
+			// so the form isn't sticky
+			$_POST = array();
 
 
 		}

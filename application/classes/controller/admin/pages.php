@@ -59,6 +59,7 @@ class Controller_Admin_Pages extends Abstract_Back_Process {
 			$page->name = $this->request->post('name');
 			$page->uri = $this->request->post('uri');
 			$page->application = ($this->request->post('application')) ? $this->request->post('application') : '';
+			$page->modified = time();
 
 			// save
 			if ($page->save()) {
