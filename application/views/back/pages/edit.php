@@ -1,14 +1,3 @@
-<style type="text/css">
-
-.application-instances, #application-options {
-	display: none;
-}
-
-label#application, #instance, #new-instance {
-	display: inline-block;
-	width: auto;
-}
-</style>
 <?php if (@$error) { ?>
 }
 <div id="error">
@@ -20,7 +9,12 @@ label#application, #instance, #new-instance {
 	<?= $message ?>
 </div>
 <?php } ?>
-<?= $page->name ?>
+<h1>
+	<?= $page->name ?>
+</h1>
+<h2>
+	Settings
+</h2>
 <form class="async" action="/ajax/page/edit/<?= (isset($page->id)) ? $page->id : '' ?>" method="POST">
 	<label>
 		Page Name
@@ -38,119 +32,30 @@ label#application, #instance, #new-instance {
 	</label>
 	<label>
 		<span class="bit">
-
-		</span>
-		<input type="checkbox" id="application-bool" /> Link this URI to an application?
-	</label>
-	<label id="application" style="display: none;">
-		Application
-		<span class="bit">
-			The application that this url is routed to.
-		</span>
-		<select name="application">
-			<option value="">(Select an application)</option>
-			<?php foreach($applications as $value => $object) { ?>
-				<option value="<?= $value ?>">
-					<?= ucfirst($value) ?>
-				</option>
-			<?php } ?>
-		</select>
-	</label>
-	<span id="application-options">
-		<label id="instance">
-			Instance Name
-			<span class="bit">
-				This is the instance of the selected application.
-			</span>
-			<span id="instance-slot">
-
-			</span>
-		</label>
-		<label id="new-instance">
-			<input type="button" id="add-new-instance" class="" value="Create New" />
-		</label>
-	</span>
-	<?php foreach($applications as $value => $object): ?>
-	<div id="<?= $value ?>" class="application-instances">
-		<select name="instances_<?= $value ?>">
-			<?php foreach($object as $instance): ?>
-			<option value="<?= $instance->id ?>">
-				<?= $instance->name ?>
-			</option>
-			<?php endforeach; ?>
-		</select>
-	</div>
-	<?php endforeach; ?>
-
-
-	<!-- content blocks -->
-
-
-	<label>
-		<span class="bit">
 			Don't forget
 		</span>
 		<input type="submit" value="Save!" />
 	</label>
 </form>
-
-<div id="content-blocks">
-	<a id="new-content-block" href="/admin/content/edit">Add new content block</a>
-</div>
-<script>
-	$(function() {
-		$("#application-bool").click(function() {
-			if ($(this).is(':checked')) {
-				$("#application, #application-options").show();
-				$("label#content-blocks").hide();
-			}
-			else {
-				$("#application, #application-options").hide();
-				$("label#content-blocks").show();
-			}
-		});
-
-		$("select[name=application]").change(function() {
-
-			var target = $(this).val();
-			var content = $("#"+ target).html();
-
-			if (target == '') {
-				$("#application-options").hide();
-				return false;
-<label>
-	Name
-	<span class="bit">
-	This is content block name, it will be used as a header for your content block and also for labeling purposes in the admin section.
-	</span>
-	<input type="text" name="name" placeholder="Name this content block..." />
-</label>
-			}
-
-			$("#application-options").show();
-
-			$("#application-options input").attr('class', target).val('Create new ' + target);
-			$("#instance-slot").html(content);
-
-		});
-
-		// init new application pop up
-		$("#add-new-instance").live('click', function() {
-			var application = $(this).attr('class');
-			var url = '/admin/' + application + '/edit';
-
-			$.colorbox({href:url});
-
-		});
-
-
-		// add new content block
-		$("#new-content-block").click(function() {
-			var href = $(this).attr('href');
-			$.colorbox({href:href});
-			return false;
-		});
-
-	});
-
-</script>
+<h1>Blocks</h1>
+<!-- move this outside this view -->
+<ul id="blocks" class="list">
+	<li>
+		<h3>
+			<a class="modal" href="/admin/block/edit">New Block</a>
+		</h3>
+	</li>
+	<?php foreach($page->blocks->where('deleted', '=', '')->find_all() as $block): ?>
+	<li>
+		<span class="controls"><a href="/admin/block/delete/<?= $block->id ?>" title="this block" class="delete">x</a></span>
+		<?php foreach($block->content->find_all() as $content): ?>
+			<h3>
+				<a href="/admin/block/edit/<?= $block->id ?>" class="modal"><?= ($content->name) ? $content->name : 'Untitled block' ?></a>
+			</h3>
+			<p>
+				<?= $content->content ?>
+			</p>
+		<?php endforeach; ?>
+	</li>
+	<?php endforeach; ?>
+</ul>

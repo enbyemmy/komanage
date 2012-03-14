@@ -3,11 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /> 
-<meta name="description" content="Example Auth with ORM for Kohana 3.1" /> 
-<meta name="author" content="JDStraughan" /> 
-<meta name="copyright" content="Copyright 2011. JDStraughan.com" />
-<meta name="language" content="en-us" /> 
-<title>Auth with ORM tutorial for Kohana 3.1</title> 
+<meta name="description" content="<?= $config['meta-description'] ?>" /> 
+<meta name="keywords" content="<?= $config['meta-keywords'] ?>" />
+<title><?= $config['title'] ?></title> 
 <style type="text/css">
 .error {
     color: red;
@@ -22,11 +20,13 @@
 	<header>
 		<h1><?= $config['title'] ?></h1>
 		<nav>
-			<?= $navigation ?>
+			<?php include Kohana::find_file('views', 'front/shared/navigation'); ?>
 		</nav>
 	</header>
     <div id="content">
-        <?= $content; ?>
+	<?php foreach($blocks as $block): ?>
+		<?php include Kohana::find_file('views', 'front/content/block'); ?>
+	<?php endforeach; ?>
     </div>
 </body>
 </html>

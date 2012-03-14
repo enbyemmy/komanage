@@ -127,8 +127,9 @@ Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
 
 
 
-Route::set('default', '(<controller>(/<action>(/<id>)))')
+Route::set('default', '(<uri>)')
 	->defaults(array(
 		'controller' => 'page',
 		'action'     => 'index',
+		'uri'	     => '/',
 	));

@@ -4,8 +4,12 @@ class Model_Content extends ORM {
 
 	protected $_table_name = "content";
 
-	protected $_has_many = array('page' => array('model' => 'page', 'through' => 'pages_content'));
-
+	protected $_belongs_to = array(
+		'block' => array(
+			'model' => 'block',
+			'foreign_key' => 'id',
+		),
+	);
 /*	public static function get_all()
 	{
 

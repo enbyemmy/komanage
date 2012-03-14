@@ -1,5 +1,9 @@
 <ul id="navigation">
+	<?php foreach($pages as $page): ?>
 	<li>
-		Here will be links!
+		<a href="<?= $page->uri ?>">
+			<?= $page->name ?>
+		</a>
 	</li>
+	<?php endforeach; ?>
 </ul>

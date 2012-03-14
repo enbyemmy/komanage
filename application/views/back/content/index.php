@@ -1,48 +1,27 @@
-<h3>
-	<a href="/admin/content/edit">Click Here to add a content</a>
-</h3>
 <?php if (!$totalblocks) { ?>
 }
 <p>
 	You haven't created any content yet, what's with the procrastination?<br />
 </p>
 <?php } else {?>
-<table>
-	<thead>
-	<th>
-		Block ID
-	</th>
-	<th>
-		Name
-	</th>
-	<th>
-		Content	
-	</th>
-	<th>
-		Last Modified
-	</th>
-	<th>
-		Actions
-	</th>
-	</thead>
+	<ul class="list" id="content-blocks">
+	<li>
+		<h3>
+			<a href="/admin/content/edit" class="modal">Add a new content block</a>
+		</h3>	
+	</li>
 	<?php foreach($content as $content) { ?>
-	<tr>
-		<td>
-			<?= $content->id ?>
-		</td>
-		<td>
-			<?= $content->name ?>
-		</td>
-		<td>
-			<?= $content->content ?>
-		</td>
-		<td>
-			<?= (isset($content->modified)) ? date('Y-m-d', $content->modified) : 'Unmodified' ?>
-		</td>
-		<td>
-			<a href="/admin/content/edit/<?= $content->id ?>">Edit</a> <a href="/admin/content/delete/<?= $content->id ?>">Delete</a>
-		</td>
-	</tr>
+		<li>
+			<h3>
+				<a href="/admin/content/edit/<?= $content->id ?>" class="modal">
+					<?= $content->name ?>
+				</a>
+			</h3>
+			<p>
+				<?= Text::limit_words($content->content, 6, '...') ?>
+			</p>
+		</li>
 	<?php } ?>
+	</ul>
 </table>
 <?php } ?>

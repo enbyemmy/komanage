@@ -30,7 +30,7 @@ $(document).live('ready', function() {
 	/** begin ajax forms **/
 
 	// submit a form asynchronously
-	$('form.async', '.content').submit(function() {
+	$('form.async', '#content').live('submit', function() {
 		
 		var buttonSubmit = $('input[type=submit]', this);
 		var action = $(this).attr('action');
@@ -46,10 +46,10 @@ $(document).live('ready', function() {
 	});
 
 	// disable the submit button by default
-	$('input[type=submit]', 'form.async').attr('disabled', 'disabled');
+	$('input[type=submit], textarea', 'form.async').attr('disabled', 'disabled');
 
 	// on input change activate the save link
-	$('input, textarea', 'form.async').live('change', function() {
+	$('input', 'form.async').live('change', function() {
 		$('input[type=submit]', 'form.async').removeAttr('disabled');
 
 	});

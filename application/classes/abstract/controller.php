@@ -13,20 +13,34 @@ abstract class Abstract_Controller extends Controller {
 	{
 		parent::before();
 
+		// assemble the page uri
+		$uri = ($this->request->param('uri') == '/') ? $this->request->param('uri') : "/" . $this->request->param('uri');
+
 		// set the dir for logic
 		$dir = $this->request->directory();
 		$template = ($dir == 'admin') ? 'back' : 'front';
-
+		
 		$is_ajax = ($this->request->is_ajax()) ? true : false;
 
-		$this->template = View::factory($template);
+		$this->template = View::factory($template)
+			->set('template', $template)
+			->set('pages', ORM::factory('page')->where('deleted', '=', '')->find_all());
 		$this->template->is_ajax = $is_ajax;
-		$this->template->navigation = View::factory($template . '/shared/navigation');
+
+		// load the site config and preferences
+		$this->template->config = ORM::factory('configuration')->find_all()->as_array('key', 'value');
+		$this->template->preferences = array();
+
 
 		// Set defaults for title and content
 		$this->template->content = '';
-		$this->template->title = ORM::factory('configuration', 'title')->value . ' | ' . $this->title . ' ';
-		$this->template->meta_description = $this->meta_description;
+		$this->template->title = $this->template->config['title'] . ' ';
+
+		// load the page
+		$page = ORM::factory('page')->where('uri', '=', $uri)->find();
+
+		// load the page blocks
+		$this->template->blocks = $page->blocks->where('deleted', '=', '')->find_all();
 
 		// init the included javascript
 		$this->template->scripts = array();

@@ -1,14 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<?php if (!$is_ajax): ?>
 <head> 
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /> 
-<meta name="description" content="<?= $meta_description ?>" />
+<meta name="description" content="<?= $config['meta-description'] ?>" />
 <meta name="language" content="en-us" /> 
 <title><?= $title ?></title>
 <link href="/assets/css/default/default.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
 <script type="text/javascript" src="/assets/jquery/colorbox/jquery.colorbox.js"></script>
+<script type="text/javascript" src="/assets/js/application.js"></script>
 <link href="/assets/jquery/colorbox/colorbox.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/assets/jquery/chosen/chosen.jquery.js"></script>
 <link href="/assets/jquery/chosen/chosen.css" type="text/css" rel="stylesheet" />
@@ -44,6 +46,7 @@ body {
 }
 </style>
 </head>
+<?php endif; ?>
 <body>
 	<?php if (!$is_ajax): ?>
 	<div id="alert">
@@ -53,35 +56,12 @@ body {
 			<?= $config['title'] ?>
 		</h1>
 		<nav>
-			<?= $navigation ?>
+			<?php include Kohana::find_file("views", "$template/shared/navigation"); ?>
 		</nav>
 	</header>
 	<?php endif; ?>
     <div id="content">
         <?= $content; ?>
     </div>
-	<!-- general ajax form submission -->
-	<!-- TODO MOVE THIS OUTSIDE OF THE TEMPLATE -->
-	<script type="text/javascript">
-		$(function() {
-
-			// submit all forms asynchronously via ajax
-			$('form.async').submit(function() {
-				var action = $(this).attr('action');
-
-				$.ajax({
-					type: "POST",
-					url: action,
-					data: $(this).serializeArray(),
-					success: function(data) {
-						$.colorbox.close;
-						alert(data);
-					}
-				});
-				return false;
-			});
-
-		});
-	</script>
 </body>
 </html>

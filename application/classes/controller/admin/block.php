@@ -9,21 +9,20 @@ class Controller_Admin_Block extends Abstract_Back_Process {
 
 		$mode = ($this->request->param('id')) ? 'edit' : 'add';
 		$referrer = explode('/', $this->request->referrer());
-		$page_id = Arr::get($referrer, (count($referrer) - 1));
+		$page_id = ($this->request->method() != HTTP_Request::POST) ? Arr::get($referrer, (count($referrer) - 1)) : $this->request->post('page_id');
+		$page = ORM::factory('page', $page_id);
 		switch($mode) {
 			case 'edit':
-				$page = ORM::factory('page', $page_id);
 				$block = ORM::factory('block', $this->request->param('id'));
 				$content = $block->content->find();
 				break;
 			case 'add':
-				$page = ORM::factory('page');
 				$block = ORM::factory('block');
 				$content = ORM::factory('content');	
 				break;
 		}
 		
-		if ($this->request->method() == "POST")
+		if ($this->request->method() == HTTP_Request::POST)
 		{
 			// load hte page
 			if ($block->loaded())
